@@ -1,0 +1,8 @@
+<div id='divUser'>
+<h1>Utilisateur</h1>
+<ul>
+	{% for user in users %}
+	<li> <a id='{{ user.getid() }}' class='c_user' href='First/showUser/{{ user.getid() }}'>{{ user.getLogin() }}</a></li>
+	{% endfor%}
+</ul>
+</div>
