@@ -55,7 +55,15 @@ class First extends Controller {
 			$_SESSION["user"]=DAO::getOne("Utilisateur", "login='{$_POST["login"]}'","password='{$_POST["password"]}'");
 			$this->loadView("main/vDefault.html");
 			echo Jquery::get("Accueil/getInfoUser","#divInfoUser");
+			if(isset($user)){
+				$_SESSION["user"]=$user;
+				
+				
+			}else{
+				$this->messageDanger("Mauvais mot de passe ou login",3000, false);
+			}
 		}else
+			
 		$this->loadView("First/connexion.html");
 	}
 }

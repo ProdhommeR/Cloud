@@ -95,4 +95,10 @@ abstract class Controller {
 		}
 		Startup::runAction($u,$initialize,$finalize);
 	}
+	public function _showMessage($message,$type="success",$timerInterval=0,$dismissable=true,$visible=true){
+		$this->loadView("main/vInfo",array("message"=>$message,"type"=>$type,"dismissable"=>$dismissable,"timerInterval"=>$timerInterval,"visible"=>$visible));
+	}
+	public function messageDanger($message,$timerInterval=0,$dismissable=true){
+		$this->_showMessage($message,"danger",$timerInterval,$dismissable);
+	}
 }
