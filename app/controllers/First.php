@@ -48,4 +48,8 @@ class First extends Controller {
 			$this->loadView ( "First/addUser.html" );
 		}
 	}
+	public function connexion(){
+		$_SESSION["user"]=DAO::getOne("Utilisateur", "login= ","password= ");
+		$this->loadView("First/connexion.html");
+	}
 }
