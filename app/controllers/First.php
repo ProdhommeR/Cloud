@@ -52,7 +52,7 @@ class First extends Controller {
 	}
 	public function connexion(){
 		if(RequestUtils::isPost()){
-			$_SESSION["user"]=DAO::getOne("Utilisateur", "login='{$_POST["login"]}'","password='{$_POST["password"]}'");
+			$user=DAO::getOne("Utilisateur", "login='{$_POST["login"]}'","password='{$_POST["password"]}'");
 			$this->loadView("main/vDefault.html");
 			echo Jquery::get("Accueil/getInfoUser","#divInfoUser");
 			if(isset($user)){
