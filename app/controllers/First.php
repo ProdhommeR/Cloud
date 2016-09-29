@@ -39,17 +39,23 @@ class First extends Controller {
 		if (RequestUtils::isPost ()) {
 			$user = new Utilisateur ();
 			RequestUtils::setValuesToObject ( $user, $_POST );
-			if (DAO::insert ( $user )) {
+			try {
+				DAO::insert ( $user );
 				echo $user->toString () . "crée";
-			} else {
-				echo "Erreur de l'ajout";
+			}
+			catch(Exception $e){
+				echo "Erreur...";
 			}
 		} else {
 			$this->loadView ( "First/addUser.html" );
 		}
 	}
 	public function connexion(){
-		$_SESSION["user"]=DAO::getOne("Utilisateur", "login= ","password= ");
+		if(RequestUtils::isPost()){
+			$_SESSION["user"]=DAO::getOne("Utilisateur", "login='{$_POST["login"]}'","password='{$_POST["password"]}'");
+			$this->loadView("main/vDefault.html");
+			echo Jquery::get("Accueil/getInfoUser","#divInfoUser");
+		}else
 		$this->loadView("First/connexion.html");
 	}
 }
