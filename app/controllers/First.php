@@ -23,7 +23,9 @@ class First extends Controller {
 			$where = "login like '%($search)%' or mail like '%($search)%'";
 		}
 		$users = DAO::getAll ( "Utilisateur", $where );
-		$this->loadView ( "First/users.html", array ("users" => $users ) );
+		$this->loadView ( "First/users.html", array (
+				"users" => $users 
+		) );
 		echo Jquery::getOn ( "click", ".c_user", "First/showUser", "#divUser" );
 	}
 	public function showUser($idUser) {
@@ -42,28 +44,42 @@ class First extends Controller {
 			try {
 				DAO::insert ( $user );
 				echo $user->toString () . "crée";
-			}
-			catch(Exception $e){
+			} catch ( Exception $e ) {
 				echo "Erreur...";
 			}
 		} else {
 			$this->loadView ( "First/addUser.html" );
 		}
 	}
-	public function connexion(){
-		if(RequestUtils::isPost()){
-			$user=DAO::getOne("Utilisateur", "login='{$_POST["login"]}'","password='{$_POST["password"]}'");
-			$this->loadView("main/vDefault.html");
-			echo Jquery::get("Accueil/getInfoUser","#divInfoUser");
-			if(isset($user)){
-				$_SESSION["user"]=$user;
-				
-				
-			}else{
-				$this->messageDanger("Mauvais mot de passe ou login",3000, false);
+	public function connexion() {
+		if (RequestUtils::isPost ()) {
+			$user = DAO::getOne ( "Utilisateur", "login='{$_POST["login"]}'", "password='{$_POST["password"]}'" );
+			$this->loadView ( "main/vDefault.html" );
+			echo Jquery::get ( "Accueil/getInfoUser", "#divInfoUser" );
+			if (isset ( $user )) {
+				$_SESSION ["user"] = $user;
+			} else {
+				$this->messageDanger ( "Mauvais mot de passe ou login", 3000, false );
 			}
-		}else
+		} else
 			
-		$this->loadView("First/connexion.html");
+			$this->loadView ( "First/connexion.html" );
+	}
+	public function update() {
+		$user = Auth::getUser();
+		if(RequestUtils::isPost()){
+			RequestUtils::setValuesToObject($user,$_POST);
+			DAO::update($user);
+			$this->loadView("main/vDefault.html");
+			$this->messageSuccess("Modification réussi avec succès !!",3000,false); 	
+			echo Jquery::get ( "Accueil/getInfoUser", "#divInfoUser" );
+		}else{
+			$disabled = "";
+			$this->loadView ( "First/update.html", array (
+					"user" => $user,
+					"disabled" => $disabled
+			) );
+			
+		}
 	}
 }
