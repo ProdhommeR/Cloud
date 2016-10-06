@@ -52,14 +52,6 @@ class Disque extends Base{
 		return $this;
 	}
 
-	public function getTarifs() {
-		return $this->tarifs;
-	}
-
-	public function setTarifs($tarifs) {
-		$this->tarifs=$tarifs;
-		return $this;
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -114,6 +106,10 @@ class Disque extends Base{
 
 	public function setServices($services) {
 		$this->services=$services;
+		return $this;
+	}
+	public function addService($service){
+		$this->services[]=$service;
 		return $this;
 	}
 }
