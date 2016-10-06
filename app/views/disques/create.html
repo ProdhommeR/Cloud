@@ -1,0 +1,27 @@
+<form method="post" action="Disques/create">
+<fieldset>
+<legend>Création d'un disque</legend>
+<div class="alert alert-info">Utilisateur : {{user.toString()}}</div>
+<div class="form-group">
+<input type="text" id="nom" name="nom" placeholder="Nom du disque...">
+<br>
+</br>
+<select name="numServices[]" multiple="multiple" size="5">
+{%for service in services %}
+<option value="{{service.getId()}}">{{service.toString()}}</option>
+{%endfor%}
+</select>
+<br>
+</br>
+<select name="numTarifs[]" multiple="multiple" size="2">
+{%for service in services %}
+<option value="{{tarif.getId}}">{{tarif.toString()}}</option>
+{%endfor%}
+</select>
+</div>
+<div class="form-group">
+<input type="submit" value="Valider" class="btn btn-default">
+	<a class="btn btn-default" href="{{config["siteUrl"]}}Accueil">Annuler</a>
+	</div>
+</fieldset>
+</form>

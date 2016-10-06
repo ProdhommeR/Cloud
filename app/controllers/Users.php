@@ -6,28 +6,37 @@
  * @package nas.controllers
  */
 class Users extends \_DefaultController {
-
-	public function __construct(){
-		parent::__construct();
-		$this->title="Utilisateurs";
-		$this->model="Utilisateur";
+	public function isValid() {
+		return Auth::isAdmin();
 	}
-
-	public function frm($id=NULL){
-		$user=$this->getInstance($id);
-		$disabled="";
-		$this->loadView("user/vAdd.html",array("user"=>$user,"disabled"=>$disabled));
+	public function onInvalidControl() {
+		$this->messageDanger ( "Vous n'êtes pas autoriser à afficher cette page !", 3000, false );
+		$this->forward("Accueil");
+		exit ();
 	}
-
-	/* (non-PHPdoc)
+	public function __construct() {
+		parent::__construct ();
+		$this->title = "Utilisateurs";
+		$this->model = "Utilisateur";
+	}
+	public function frm($id = NULL) {
+		$user = $this->getInstance ( $id );
+		$disabled = "";
+		$this->loadView ( "user/vAdd.html", array (
+				"user" => $user,
+				"disabled" => $disabled 
+		) );
+	}
+	
+	/*
+	 * (non-PHPdoc)
 	 * @see _DefaultController::setValuesToObject()
 	 */
 	protected function setValuesToObject(&$object) {
-		parent::setValuesToObject($object);
-		$object->setAdmin(isset($_POST["admin"]));
+		parent::setValuesToObject ( $object );
+		$object->setAdmin ( isset ( $_POST ["admin"] ) );
 	}
-
-	public function tickets(){
-		$this->forward("tickets");
+	public function tickets() {
+		$this->forward ( "tickets" );
 	}
 }

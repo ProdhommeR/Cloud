@@ -5,6 +5,7 @@ class Tarifs extends \_DefaultController {
 	}
 	public function onInvalidControl(){
 		$this->messageDanger("Vous n'êtes pas autoriser à afficher cette page !",3000,false);
+		$this->forward("Accueil");
 		exit();
 	}
 	public function __construct() {
