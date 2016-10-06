@@ -7,6 +7,14 @@ class Disques extends \_DefaultController {
 		$this->title = "Disques";
 		$this->model = "Disque";
 	}
+	public function isValid() {
+		return Auth::isAuth();
+	}
+	public function onInvalidControl() {
+		$this->messageDanger ( "Vous n'êtes pas autoriser à afficher cette page !", 3000, false );
+		$this->forward("Accueil");
+		exit ();
+	}
 	public function create() {
 		if(RequestUtils::isPost()){
 			$disque = new Disque ();
@@ -18,7 +26,7 @@ class Disques extends \_DefaultController {
 				$disque->addService ( $service );
 			}
 			foreach ($_POST["numTarifs"] as $numTarifs){
-				$tarif=DAO::getOne("Tarif", $numTarifs);
+				$tarif=DAO::getOne("DisqueTarif", $numTarifs);
 				$disque->addTarif($tarif);
 			}
 			try {
@@ -30,7 +38,8 @@ class Disques extends \_DefaultController {
 			
 		}else{
 			$services=DAO::getAll("Service");
-			$this->loadView("disques/create.html",array("services"=>$services,"user"=>Auth::getUser()));
+			$tarif=DAO::getAll("Tarif");
+			$this->loadView("disques/create.html",array("services"=>$services,"tarifs"=>$tarif,"user"=>Auth::getUser()));
 			
 		}
 		

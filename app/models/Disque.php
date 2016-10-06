@@ -112,4 +112,8 @@ class Disque extends Base{
 		$this->services[]=$service;
 		return $this;
 	}
+	public function addTarif($tarif){
+		$this->tarifs[]=$tarif;
+		return $this;
+	}
 }

@@ -13,8 +13,8 @@
 </select>
 <br>
 </br>
-<select name="numTarifs[]" multiple="multiple" size="2">
-{%for service in services %}
+<select name="numTarifs[]">
+{%for tarif in tarifs %}
 <option value="{{tarif.getId}}">{{tarif.toString()}}</option>
 {%endfor%}
 </select>
