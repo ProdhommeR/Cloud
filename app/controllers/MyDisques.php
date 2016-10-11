@@ -18,23 +18,19 @@ class MyDisques extends Controller{
 		}
 	}
 	
-	public function __construct() {
-		parent::__construct ();
-		$this->title = "Disques";
-		$this->model = "Disque";
-	}
+	
 
 }
 
-/*public function Users($search = NULL) {
+/*public function Disques($search = NULL) {
 		$where = "1=1";
 		if (isset ( $search )) {
-			$where = "login like '%($search)%' or mail like '%($search)%'";
+			$where = "id like '%($search)%' or nom like '%($search)%'";
 		}
-		$users = DAO::getAll ( "Utilisateur", $where );
-		$this->loadView ( "First/users.html", array (
-				"users" => $users 
+		$users = DAO::getAll ( "Disque", $where );
+		$this->loadView ( "First/disque.html", array (
+				"disques" => $disque 
 		) );
-		echo Jquery::getOn ( "click", ".c_user", "First/showUser", "#divUser" );
+		echo Jquery::getOn ( "click", ".c_disque", "First/showdisque", "#divDisque" );
 	}
 	*/
