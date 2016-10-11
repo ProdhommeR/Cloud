@@ -113,7 +113,10 @@ class Disque extends Base{
 		return $this;
 	}
 	public function addTarif($tarif){
-		$this->tarifs[]=$tarif;
-		return $this;
+		$disqueTarif=new DisqueTarif();
+		$disqueTarif->setDisque($this);
+		$disqueTarif->setTarif($tarif);
+		$this->disqueTarifs[]=$disqueTarif;
+		return $disqueTarif;
 	}
 }

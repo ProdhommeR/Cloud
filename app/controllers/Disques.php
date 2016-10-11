@@ -8,40 +8,59 @@ class Disques extends \_DefaultController {
 		$this->model = "Disque";
 	}
 	public function isValid() {
-		return Auth::isAuth();
+		return Auth::isAuth ();
 	}
 	public function onInvalidControl() {
 		$this->messageDanger ( "Vous n'êtes pas autoriser à afficher cette page !", 3000, false );
-		$this->forward("Accueil");
+		$this->forward ( "Accueil" );
 		exit ();
 	}
 	public function create() {
-		if(RequestUtils::isPost()){
+		if (RequestUtils::isPost ()) {
+			global $config;
+			$user = Auth::getUser ();
 			$disque = new Disque ();
+			$file = $_POST ["nom"];
+			$file=preg_replace('/[^A-Za-z0-9 _ .-]/', '', $file);
 			RequestUtils::setValuesToObject ( $disque, $_POST );
+			$disque->setNom($file);
 			// $user= DAO::getOne("Utilisateur",$_POST["idUtilisateur"]);
 			$disque->setUtilisateur ( Auth::getUser () );
 			foreach ( $_POST ["numServices"] as $numServices ) {
 				$service = DAO::getOne ( "Service", $numServices );
 				$disque->addService ( $service );
 			}
-			foreach ($_POST["numTarifs"] as $numTarifs){
-				$tarif=DAO::getOne("DisqueTarif", $numTarifs);
-				$disque->addTarif($tarif);
-			}
+			$cloud = $config ["cloud"];
+			$Path = $cloud ["root"] . "/" . $cloud ["prefix"] . $user->getLogin () . "/" . $file;
 			try {
-			DAO::insert ( $disque,true );
-			echo "Votre disque &nbsp;'", $disque->toString(). "'&nbsp;a été créée...";
-			}catch (Exception $e){
+				if (file_exists($Path)){
+						$this->messageDanger("!!! Disque déjà existant !!!");
+	
+				}else {
+					DAO::insert ( $disque, true );
+					$tarif = DAO::getOne ( "Tarif", $_POST ["numTarif"] );
+					$disqueTarif = $disque->addTarif ( $tarif );
+					DAO::insert ( $disqueTarif );
+					DirectoryUtils::mkDir($Path,0777,true);
+					echo "Votre disque &nbsp;'", $disque->toString () . "'&nbsp;a été créé...";
+					
+				}
+			
+			} catch ( Exception $e ) {
+				echo $e->getMessage ();
 				echo "Erreur...";
 			}
 			
-		}else{
-			$services=DAO::getAll("Service");
-			$tarif=DAO::getAll("Tarif");
-			$this->loadView("disques/create.html",array("services"=>$services,"tarifs"=>$tarif,"user"=>Auth::getUser()));
 			
+			
+		} else {
+			$services = DAO::getAll ( "Service" );
+			$tarif = DAO::getAll ( "Tarif" );
+			$this->loadView ( "disques/create.html", array (
+					"services" => $services,
+					"tarifs" => $tarif,
+					"user" => Auth::getUser () 
+			) );
 		}
-		
 	}
 }

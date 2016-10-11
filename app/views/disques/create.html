@@ -4,6 +4,7 @@
 <div class="alert alert-info">Utilisateur : {{user.toString()}}</div>
 <div class="form-group">
 <input type="text" id="nom" name="nom" placeholder="Nom du disque...">
+<input type="file" id="fichier" name="fichier" placeholder="Nom du dossier...">
 <br>
 </br>
 <select name="numServices[]" multiple="multiple" size="5">
@@ -13,9 +14,9 @@
 </select>
 <br>
 </br>
-<select name="numTarifs[]">
+<select name="numTarif">
 {%for tarif in tarifs %}
-<option value="{{tarif.getId}}">{{tarif.toString()}}</option>
+<option value="{{tarif.getId()}}">{{tarif.toString()}}</option>
 {%endfor%}
 </select>
 </div>
