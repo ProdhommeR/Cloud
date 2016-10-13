@@ -2,7 +2,16 @@
 use micro\controllers\Controller;
 use micro\js\Jquery;
 use micro\utils\RequestUtils;
+use micro\orm\DAO;
 class MyDisques extends Controller {
+	public function isValid() {
+		return Auth::isAuth ();
+	}
+	public function onInvalidControl() {
+		$this->messageDanger ( "Vous n'êtes pas autoriser à afficher cette page !", 3000, false );
+		$this->forward ( "Accueil" );
+		exit ();
+	}
 	public function initialize() {
 		if (! RequestUtils::isAjax ()) {
 			$this->loadView ( "main/vHeader.html", array (
@@ -25,13 +34,23 @@ class MyDisques extends Controller {
 		$this->model = "Disque";
 	}
 	public function Disques($search = NULL) {
-
+		
+		$where = "idutilisateur=".Auth::getUser()->getId();
+		if(isset($search)){
+			$where.=" and nom like '%".$search."%'";
+		}
+		$disques = DAO::getAll ( "Disque", $where );
+		$this->loadView ( "disques/MesDisques.html", array (
+				"disques" => $disques 
+		) );
+		//echo Jquery::getOn ( "click", ".c_disque", "First/showUser", "#divUser" );
+			
 	
 	
 
 }
 
-public function Disques($search = NULL) {
+/*public function Disques($search = NULL) {
 		$where = "1=1";
 		if (isset ( $search )) {
 			$where = "id like '%($search)%' or nom like '%($search)%'";
@@ -41,7 +60,7 @@ public function Disques($search = NULL) {
 				"disques" => $disque 
 		) );
 		echo Jquery::getOn ( "click", ".c_disque", "First/showdisque", "#divDisque" );
-	}
+	}*/
 }
 
 	
