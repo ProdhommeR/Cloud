@@ -18,12 +18,20 @@ class MyDisques extends Controller {
 			$this->loadView ( "main/vFooter.html" );
 		}
 	}
+
 	public function __construct() {
 		parent::__construct ();
 		$this->title = "Disques";
 		$this->model = "Disque";
 	}
 	public function Disques($search = NULL) {
+
+	
+	
+
+}
+
+public function Disques($search = NULL) {
 		$where = "1=1";
 		if (isset ( $search )) {
 			$where = "id like '%($search)%' or nom like '%($search)%'";
