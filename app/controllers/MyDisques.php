@@ -51,7 +51,8 @@ public function Disques($search = NULL) {
 		$disque = DAO::getOne ( "Disque", $id );
 		if (is_null ( $disque ) === false) {
 			echo "Nom du disque : " . $disque->getnom () . "<br>";
-			echo "Mémoire allouée : " . DirectoryUtils::formatBytes($disque->getQuota ());
+			echo "Mémoire allouée : " . DirectoryUtils::formatBytes($disque->getQuota ()). "<br>";
+			echo "Tarif : ".$disque->getTarif();
 		} else {
 			
 		}
