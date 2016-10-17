@@ -1,0 +1,8 @@
+<div id='divDisk'>
+<h1>Mes Disques</h1>
+<ul>
+	{% for disque in disques %}
+	<li> <a id='{{ disque.getid() }}' class='c_disque'>{{disque.getnom() }}</a></li>
+	{% endfor%}
+</ul>
+</div>

@@ -24,9 +24,7 @@ class MyDisques extends Controller {
 		$this->title = "Disques";
 		$this->model = "Disque";
 	}
-	
-
-	
+		
 	
 
 
