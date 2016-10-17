@@ -23,19 +23,6 @@ class MyDisques extends Controller {
 		$this->title = "Disques";
 		$this->model = "Disque";
 	}
-
-
-public function Disques($search = NULL) {
-		$where = "1=1";
-		if (isset ( $search )) {
-			$where = "id like '%($search)%' or nom like '%($search)%'";
-		}
-		$users = DAO::getAll ( "Disque", $where );
-		$this->loadView ( "First/disque.html", array (
-				"disques" => $disque 
-		) );
-		echo Jquery::getOn ( "click", ".c_disque", "First/showdisque", "#divDisque" );
-
 	public function Disques($search = NULL) {
 		$where = "idutilisateur=" . Auth::getUser ()->getId ();
 		if (isset ( $search )) {
