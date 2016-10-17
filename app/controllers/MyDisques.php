@@ -24,12 +24,11 @@ class MyDisques extends Controller {
 		$this->title = "Disques";
 		$this->model = "Disque";
 	}
-	public function Disques($search = NULL) {
+	
 
 	
 	
 
-}
 
 public function Disques($search = NULL) {
 		$where = "1=1";
