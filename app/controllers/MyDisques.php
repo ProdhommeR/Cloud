@@ -18,14 +18,11 @@ class MyDisques extends Controller {
 			$this->loadView ( "main/vFooter.html" );
 		}
 	}
-
 	public function __construct() {
 		parent::__construct ();
 		$this->title = "Disques";
 		$this->model = "Disque";
 	}
-		
-	
 
 
 public function Disques($search = NULL) {
@@ -38,6 +35,26 @@ public function Disques($search = NULL) {
 				"disques" => $disque 
 		) );
 		echo Jquery::getOn ( "click", ".c_disque", "First/showdisque", "#divDisque" );
+
+	public function Disques($search = NULL) {
+		$where = "idutilisateur=" . Auth::getUser ()->getId ();
+		if (isset ( $search )) {
+			$where .= " and nom like '%" . $search . "%'";
+		}
+		$disques = DAO::getAll ( "Disque", $where );
+		$this->loadView ( "disques/MesDisques.html", array (
+				"disques" => $disques 
+		) );
+		 echo Jquery::getOn ( "click", ".c_disque", "MyDisques/showDisk", "#divDisk" );
+	}
+	public function showDisk($id) {
+		$disque = DAO::getOne ( "Disque", $id );
+		if (is_null ( $disque ) === false) {
+			echo "Nom du disque : " . $disque->getnom () . "<br>";
+			echo "Mémoire allouée : " . DirectoryUtils::formatBytes($disque->getQuota ());
+		} else {
+			
+		}
 	}
 }
 
