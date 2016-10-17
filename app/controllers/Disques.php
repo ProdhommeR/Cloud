@@ -21,9 +21,9 @@ class Disques extends \_DefaultController {
 			$user = Auth::getUser ();
 			$disque = new Disque ();
 			$file = $_POST ["nom"];
-			$file=preg_replace('/[^A-Za-z0-9 _ .-]/', '', $file);
+			$file = preg_replace ( '/[^A-Za-z0-9 _ .-]/', '', $file );
 			RequestUtils::setValuesToObject ( $disque, $_POST );
-			$disque->setNom($file);
+			$disque->setNom ( $file );
 			// $user= DAO::getOne("Utilisateur",$_POST["idUtilisateur"]);
 			$disque->setUtilisateur ( Auth::getUser () );
 			foreach ( $_POST ["numServices"] as $numServices ) {
@@ -33,26 +33,23 @@ class Disques extends \_DefaultController {
 			$cloud = $config ["cloud"];
 			$Path = $cloud ["root"] . "/" . $cloud ["prefix"] . $user->getLogin () . "/" . $file;
 			try {
-				if (file_exists($Path)){
-						$this->messageDanger("!!! Disque déjà existant !!!");
-	
-				}else {
+				if (! file_exists ( $cloud ["root"] . "/" . $cloud ["prefix"] . $user->getLogin () )) {
+					mkdir ( $cloud ["root"] . "/" . $cloud ["prefix"] . $user->getLogin () );
+				}
+				if (! file_exists ( $Path )) {
+					DirectoryUtils::mkDir ( $Path, 0777, true );
 					DAO::insert ( $disque, true );
 					$tarif = DAO::getOne ( "Tarif", $_POST ["numTarif"] );
 					$disqueTarif = $disque->addTarif ( $tarif );
 					DAO::insert ( $disqueTarif );
-					DirectoryUtils::mkDir($Path,0777,true);
 					echo "Votre disque &nbsp;'", $disque->toString () . "'&nbsp;a été créé...";
-					
+				} else {
+					$this->messageDanger ( "!!! Disque déjà existant !!!" );
 				}
-			
 			} catch ( Exception $e ) {
 				echo $e->getMessage ();
 				echo "Erreur...";
 			}
-			
-			
-			
 		} else {
 			$services = DAO::getAll ( "Service" );
 			$tarif = DAO::getAll ( "Tarif" );
