@@ -2,6 +2,8 @@
 use micro\controllers\Controller;
 use micro\js\Jquery;
 use micro\utils\RequestUtils;
+use micro\orm\DAO;
+
 class MyDisques extends Controller {
 	public function initialize() {
 		if (! RequestUtils::isAjax ()) {
