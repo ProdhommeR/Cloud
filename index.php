@@ -12,6 +12,10 @@ require_once ROOT.'micro/controllers/Autoloader.php';
 require_once ROOT.'./../vendor/autoload.php';
 
 Autoloader::register();
+if (!file_exists("Install/InstallPHP.php")){
+	include "Install/InstallPHP.php";
+	exit();
+}
 Startup::run();
 
 

@@ -3,7 +3,6 @@ use micro\controllers\Controller;
 use micro\js\Jquery;
 use micro\utils\RequestUtils;
 use micro\orm\DAO;
-
 class MyDisques extends Controller {
 	public function initialize() {
 		if (! RequestUtils::isAjax ()) {
@@ -25,6 +24,14 @@ class MyDisques extends Controller {
 		$this->title = "Disques";
 		$this->model = "Disque";
 	}
+	public function isValid() {
+		return Auth::isAuth ();
+	}
+	public function onInvalidControl() {
+		$this->messageDanger ( "Vous n'êtes pas autoriser à afficher cette page !", 3000, false );
+		$this->forward ( "Accueil" );
+		exit ();
+	}
 	public function Disques($search = NULL) {
 		$where = "idutilisateur=" . Auth::getUser ()->getId ();
 		if (isset ( $search )) {
@@ -34,19 +41,20 @@ class MyDisques extends Controller {
 		$this->loadView ( "disques/MesDisques.html", array (
 				"disques" => $disques 
 		) );
-		 echo Jquery::getOn ( "click", ".c_disque", "MyDisques/showDisk", "#divDisk" );
+		echo Jquery::getOn ( "click", ".c_disque", "MyDisques/showDisk", "#divDisk" );
 	}
 	public function showDisk($id) {
 		$disque = DAO::getOne ( "Disque", $id );
 		if (is_null ( $disque ) === false) {
 			echo "Nom du disque : " . $disque->getnom () . "<br>";
-			echo "Mémoire allouée : " . DirectoryUtils::formatBytes($disque->getQuota ()). "<br>";
-			echo "Tarif : ".$disque->getTarif();
+			echo "Mémoire allouée : " . DirectoryUtils::formatBytes ( $disque->getQuota () ) . "<br>";
+			echo "Tarif : " . $disque->getTarif () . "&nbsp;<a class='btn btn-primary btn-xs' href='MyDisques/updateTarif/{$disque->getId()}'>" . "<span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a>";
 		} else {
-			
 		}
 	}
+	public function updateTarif($id) {
+		$disque = DAO::getOne("Disque", $id);
+		$disqueTarif= $disque->getTarif();
+	}
 }
-
-	
 	
