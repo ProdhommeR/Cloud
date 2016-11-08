@@ -1,6 +1,6 @@
 <?php
 return array(
-		"siteUrl"=>"http://127.0.0.1/Cloud/",
+		"siteUrl"=>"http://127.0.0.1/cloud/",
 		"documentRoot"=>"Accueil",
 		"database"=>[
 				"dbName"=>"cloud",
@@ -15,6 +15,7 @@ return array(
 		"templateEngine"=>'micro\views\engine\Twig',
 		"templateEngineOptions"=>array("cache"=>false),
 		"test"=>false,
+		"debug"=>false,
 		"cloud"=>array('root'=>'files/',
 				'prefix'=>'srv-')
 );

@@ -29,41 +29,6 @@ abstract class Controller {
 	 * Méthode appelée avant chaque action
 	 */
 	public function initialize() {
-		if (file_exists ( "Install/InstallPHP.php" )) {
-			echo "Fichier trouvé";
-			if (file_exists ( "app/config.php" )) {
-				echo "<br> Fichier config.php trouvé ! ";
-				global $config;
-				$data= $config["database"];
-				print_r($data) ;
-				if(!array_key_exists("dbName", $data) || empty(@$data["dbName"])){
-					if(!array_key_exists("dbName", $data)){
-						
-					}
-					echo " <br> c vidd :) !";
-				}
-				if(!array_key_exists("serverName", $data) || empty(@$data["serverName"])){
-					echo " <br> c vidd :) !";
-				}
-				if(!array_key_exists("port", $data) || empty(@$data["port"])){
-					echo " <br> c vidd :) !";
-				}
-				if(!array_key_exists("user", $data) || empty(@$data["user"])){
-					echo " <br> c vidd :) !";
-				}
-				if(!array_key_exists("password", $data)){
-					echo " <br> c vidd :) !";
-				}
-				$this->loadView("/Install/InstallView.html");	
-				$version=phpversion();
-				$version_sql=mysqli_get_client_info();
-				echo "<br> Version de php :",$version;
-				echo "<br> Version de MySql :",$version_sql;
-				
-			} else {
-				echo " <br> Fichier config.php non trouvé ! ";
-			}
-		}
 	}
 	
 	/**

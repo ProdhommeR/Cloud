@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CLOUD</title>
+</head>
+<body>
+<div class="well well-lg">
+<fieldset>
+<legend> Vérification configuration</legend>
+<p> Version php : {{ phpversion }} </p>
+<p> Version MYSQL : {{ mysqli_get_client_version }} </p>
+<p> Mod Rewrite : </p>
+</fieldset>
+<fieldset>
+<legend> Configuration </legend>
+<form action="install.php">
+Url : <input type="text" name="url" placeholder="127.0.0.1" ><br>
+<br/>
+BDD : <input type="text" name="base" placeholder="cloud"><br>
+<br/>
+Utilisateur <input type="text" name="base" placeholder="root.."><br>
+<br/>
+Mot de passe : <input type="text" name="base" placeholder="admin.."><br>
+<br/>
+
+<input type="submit" value="Valider">
+</form>
+</fieldset>
+
+</div>
+</body>
+</html>
