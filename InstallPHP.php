@@ -73,7 +73,7 @@ class Install {
 			<input type='hidden' name='envoi'>
 		Url : <input type='text' name='url' value='" . $serverName . "' placeholder='' ><br>
 		<br/>
-		BDD : <input type='text' name='base' value='" . $dbName . "'><br>
+		BDD : <input type='text' name='dbName' value='" . $dbName . "'><br>
 		<br/>
 		Utilisateur <input type='text' name='user'  value='" . $user . "'><br>
 		<br/>
@@ -97,8 +97,7 @@ class Install {
 		$nomUser = $_POST ['user'];
 		$mdp = $_POST ['mdp'];
 		$basecree = $_POST ['base'];
-		if ($basecree == 1) {
-			$filename = 'app/database/cloud.sql';
+			$filename = 'app/database/cloud2.sql';
 			$mysql_host = '$url';
 			$mysql_username = '$nomUser';
 			$mysql_password = '$mdp';
@@ -129,7 +128,7 @@ class Install {
 					}
 			}
 			echo " & tables importées avec succès !";
-			}
+			
 			$file = ("app/config.php");
 			$current = file_get_contents($file);
 			$current =
