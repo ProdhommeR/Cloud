@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 4.2.11
 -- http://www.phpmyadmin.net
 --
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `cloud`
 --
-
+CREATE DATABASE IF NOT EXIST 'cloud'
 
 -- --------------------------------------------------------
 
