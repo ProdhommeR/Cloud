@@ -5,7 +5,7 @@ php:
   - 5.6
   - 7.0
 addons:
-  chrome: "49.0"
+  firefox: "49.0"
 before_script:
  - mysql < app/database/cloud2.sql -u root
  - wget http://getcomposer.org/composer.phar
