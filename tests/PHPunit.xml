@@ -13,4 +13,14 @@
     <testsuite name="Testsuite">
         <directory>./</directory>
     </testsuite>
+    <filter>
+    <whitelist processUncoveredFilesFromWhitelist="true">
+      <directory suffix=".php">/path/to/files</directory>
+      <file>/path/to/file</file>
+      <exclude>
+        <directory suffix=".php">/path/to/files</directory>
+        <file>/path/to/file</file>
+      </exclude>
+    </whitelist>
+  </filter>
 </phpunit>
